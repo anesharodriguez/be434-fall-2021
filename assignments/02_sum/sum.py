@@ -13,13 +13,14 @@ def get_args():
     """Get command-line arguments"""
 
     parser = argparse.ArgumentParser(
-        description='Rock the Casbah',
+        description='add numbers',
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 
-    parser.add_argument('num',
-                        metavar='int',
+    parser.add_argument('nums',
+                        metavar='INT',
+                        type=int,
                         nargs='+',
-                        help='numbers')
+                        help='numbers to add')
 
     parser.add_argument('-a',
                         '--arg',
@@ -48,7 +49,6 @@ def main():
 
     args = get_args()
     num_arg = args.num
-try:
     NumList = []
     number = int(input("Enter how many numbers:"))
 
@@ -57,19 +57,7 @@ try:
         NumList.append(value)
         total = sum(NumList)
         print("sum:",total)
-        assert number != int
-        print('need number')
-except AssertionError as msg:
-    print(msg)
     
-       
-            
-    
-
-    
-      
-
-
 
 # --------------------------------------------------
 if __name__ == '__main__':
