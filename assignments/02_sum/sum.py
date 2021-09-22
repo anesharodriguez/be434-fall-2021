@@ -6,6 +6,7 @@ Purpose: Rock the Casbah
 """
 
 import argparse
+from os import remove, replace
 
 
 # --------------------------------------------------
@@ -16,29 +17,19 @@ def get_args():
         description='add numbers',
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 
-    parser.add_argument('nums',
+    parser.add_argument('num',
                         metavar='INT',
                         type=int,
                         nargs='+',
                         help='numbers to add')
 
-    parser.add_argument('-a',
-                        '--arg',
-                        help='A named string argument',
-                        metavar='str',
-                        type=str,
-                        default='rejected')
+  
 
-    parser.add_argument('-i',
-                        '--int',
-                        help='A named integer argument',
-                        metavar='int',
-                        type=int,
-                        default=0)
-   # parser.add_argument('reject',
-   #                     metavar='str',
-    #                    nargs='+',
-     #                   help= 'need number')
+    #parser.add_argument('reject',
+     #                   metavar='str',
+      #                  type=str,
+     #                   nargs='+',
+  #                      help= 'need number')
 
     return parser.parse_args()
 
@@ -48,16 +39,13 @@ def main():
     """Make a jazz noise here"""
 
     args = get_args()
-    num_arg = args.num
-    NumList = []
-    number = int(input("Enter how many numbers:"))
+    num = args.num
+    #snum = str(num)
+  
+    print(' {}  '  .format(' + ' .join(str(num)),num),' , ' ' ' .replace, ' = ',sum(num))
+   #print('{} =' .format(snum) + str(snum),sum(num))  
+   
 
-    for i in range(1, number + 1):
-        value = int(input("Enter the number:"))
-        NumList.append(value)
-        total = sum(NumList)
-        print("sum:",total)
-    
 
 # --------------------------------------------------
 if __name__ == '__main__':
