@@ -41,8 +41,8 @@ def main():
     args = get_args()
     num = args.num
     #snum = str(num)
-  
-    print(' {}  '  .format(' + ' .join(str(num)),num),' , ' ' ' .replace, ' = ',sum(num))
+    for i in range(len(args.num)):
+        print( str(args.num[i]),' + ', str('args.num[:-1]') .format(' + ' .join(str(args.num))),' = ',sum(args.num))
    #print('{} =' .format(snum) + str(snum),sum(num))  
    
 
