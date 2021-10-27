@@ -6,6 +6,8 @@ Purpose: Rock the Casbah
 """
 
 import argparse
+import io
+from collections import defaultdict
 
 
 # --------------------------------------------------
@@ -28,13 +30,15 @@ def get_args():
 
     parser.add_argument('-k',
                         '--kmer',
-                        help='K-mer size',
-                        metavar='int',
+                        help='Kmer size',
+                        metavar='INT',
                         type=int,
                         default=3)
 
-
-    return parser.parse_args()
+    args = parser.parse_args()
+    if args.kmer < 1:
+        parser.error(f'--kmer "{args.kmer}" must be > 0')
+    return args
 
 
 # --------------------------------------------------
@@ -42,30 +46,36 @@ def main():
     """Make a jazz noise here"""
 
     args = get_args()
-    file1 = {}
-    file2 = {}
-    total_kmers =0
-    k=0
-    for line in args.file1:
-        kmers_word = 0
-        for word in line.split():
-            file1[word] = 1
-     
-    for line in args.file2:
-        for word in line.split():
-            file2[word] = 1
+    kmers1 = count_kmers(args.file1, args.kmer)
+    kmers2 = count_kmers(args.file2, args.kmer)
 
-    for word in file1:
-            if word in file2:
-                for kmer in find_kmers(word,k):
-    
-                    kmers_word += len(line.split())
-           
-                total_kmers += kmers_word
-    
-                print(word,total_kmers)
+    for common in set(kmers1).intersection(set(kmers2)):
+        print('{:10} {:5} {:5}' .format(
+            common, kmers1.get(common), kmers2.get(common)))
+# -------------------------------------------------
+def count_kmers(fh, k):
+
+    kmers = defaultdict(int)
+
+    for line in fh:
+        for word in line.split():
+            for kmer in find_kmers(word, k):
+                kmers[kmer] += 1
+    return kmers
+# ---------------------------------------------------
+def test_count_kmers():
+    """ Test count_kmers """
+    dat = 'foo\nbar\nbaz\n'
+    assert count_kmers(io.StringIO(dat), 3) == {'foo': 1, 'bar': 1, 'baz': 1}
+    assert count_kmers(io.StringIO(dat), 2) == {
+        'fo': 1,
+        'oo': 1,
+        'ba': 2,
+        'ar': 1,
+        'az': 1
+    }
 # ----------------------------------------------------
-def find_kmers(word,k):
+def find_kmers(word, k):
     """Find k-mers in string"""
     n = len(word) - k + 1
     return [] if n < 1 else [word[i:i + k] for i in range(n)]
@@ -79,6 +89,8 @@ def test_find_kmers():
     assert find_kmers('ACTG', 3) == ['ACT', 'CTG']
     assert find_kmers('ACTG', 4) == ['ACTG']
     assert find_kmers('ACTG', 5) == []
+
+
 # --------------------------------------------------
 if __name__ == '__main__':
     main()
