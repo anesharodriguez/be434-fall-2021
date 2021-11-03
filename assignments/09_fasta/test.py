@@ -11,6 +11,8 @@ from Bio import SeqIO
 
 PRG = './au_pair.py'
 
+# pylint: disable=too-many-locals
+
 
 class Test(NamedTuple):
     """ Test """
