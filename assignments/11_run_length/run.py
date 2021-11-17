@@ -37,17 +37,22 @@ def main():
     args = get_args()
     #print(args)
     # dict = OrderedDict.fromkeys(input)
-    prev = ''
-    count = 0
-    for base in args.text :
-        print(base, base == prev)
-        prev = base
-        if base == prev:
-            count += 1
-            print(count)
-        else:
-            count = 1
-            print(base)
+    # prev = ''
+    # total_base = 0
+    for base in args.text.splitlines() :
+        print(rle(base))
+    #     print(base, base == prev)
+    #     prev = base
+    #     count = 0
+    #     if base == prev:
+    #         count += 1
+    # total_base += count
+    # print(total_base)
+            # else:
+            # print(base)
+        
+            
+        
         # patrn.append(line.rstrip())
         # if text == os.path.isfile:
         #     open('readme.txt').readlines()
@@ -62,6 +67,32 @@ def main():
     
             #print(base, line, end='')
 
+# --------------------------------------------------
+def rle(text: str) -> str:
+    """Run-length encoding"""
+    prev = ''
+    count = 1
+    for char in text:
+        if char == prev:
+            count += 1
+            print(count)
+        else:
+            count = 1
+            prev = char
+            print(char)
+    
+    
+    return ''
+
+# --------------------------------------------------
+def test_rle():
+    """ Test rle """
+
+    assert rle('A') == 'A'
+    assert rle('ACGT') == 'ACGT'
+    assert rle('AA') == 'A2'
+    assert rle('AAAAA') == 'A5'
+    assert rle('ACCGGGTTTT') == 'AC2G3T4'
 # --------------------------------------------------
 if __name__ == '__main__':
     main()
