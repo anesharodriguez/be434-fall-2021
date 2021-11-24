@@ -11,6 +11,8 @@ import re
 from typing import Pattern
 
 # --------------------------------------------------
+
+
 def get_args():
     """Get command-line arguments"""
 
@@ -20,25 +22,24 @@ def get_args():
 
     parser.add_argument('pattern',
                         metavar='PATTERN',
-                        type= str,
                         help='Search pattern')
 
     parser.add_argument('file',
                         help='Input file(s)',
-                        nargs='*',
+                        nargs='+',
                         metavar='FILE',
                         type=argparse.FileType('rt'),
                         default=None)
 
     parser.add_argument('-i',
-                        '--insenitive',
+                        '--insensitive',
                         help='Case-insensitive search',
-                        default=False)
+                        action='store_true')
 
     parser.add_argument('-o',
                         '--outfile',
                         metavar='File',
-                        help='Output',
+                        help='Output file',
                         type=argparse.FileType('wt'),
                         default=sys.stdout)
 
@@ -50,10 +51,21 @@ def main():
     """Make a jazz noise here"""
 
     args = get_args()
-    for pattern in args.pattern:
-        print(pattern)
-        for fh in args.file:
-            print(fh)
+    # for pattern in args.pattern:
+    #     print(pattern, end='\n')
+
+    num_files = len(args.file)
+    for fh in args.file:
+        for line in fh:
+            if re.search(args.pattern, line,
+                         re.IGNORECASE if args.insensitive else 0):
+                args.outfile.write('{}{}'.format(
+                    f'{fh.name}:' if num_files > 1 else '', line))
+                    
+                # print(line, end='', file=args.outfile)
+            # else:
+            #     if re.search(args.pattern, line):
+            #         print(line, end='', file=args.outfile)
         # for line in fh:
         #     if re.search(sys.argv[1], line):
         #         print(line)
