@@ -20,10 +20,12 @@ def get_args():
 
     parser.add_argument('pattern',
                         metavar='PATTERN',
+                        type= str,
                         help='Search pattern')
 
     parser.add_argument('file',
                         help='Input file(s)',
+                        nargs='*',
                         metavar='FILE',
                         type=argparse.FileType('rt'),
                         default=None)
@@ -48,9 +50,10 @@ def main():
     """Make a jazz noise here"""
 
     args = get_args()
-    with open(sys.args[2],"r") as file:
-        for line in file:
-            if re.search(sys.args[1], line):
+    for fh in args.file:
+        print(fh)
+        for line in fh:
+            if re.search(sys.argv[1], line):
                 print(line)
 
 
