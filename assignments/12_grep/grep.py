@@ -50,11 +50,13 @@ def main():
     """Make a jazz noise here"""
 
     args = get_args()
-    for fh in args.file:
-        print(fh)
-        for line in fh:
-            if re.search(sys.argv[1], line):
-                print(line)
+    for pattern in args.pattern:
+        print(pattern)
+        for fh in args.file:
+            print(fh)
+        # for line in fh:
+        #     if re.search(sys.argv[1], line):
+        #         print(line)
 
 
 # --------------------------------------------------
