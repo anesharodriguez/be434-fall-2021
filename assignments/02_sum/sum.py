@@ -42,8 +42,11 @@ def main():
     num = args.num
     #snum = str(num)
     for i in range(len(args.num)):
-        print( str(args.num[i]),' + ', str('args.num[:-1]') .format(' + ' .join(str(args.num))),' = ',sum(args.num))
-   #print('{} =' .format(snum) + str(snum),sum(num))  
+        if len(args.num) == 1:
+            print(num, '=' ,args.num)
+        else:
+            print( str(args.num[0]),' + ', str(args.num[i]),' = ',sum(args.num))
+            #print('{} + {}  = {}' .format(num) + str(num),sum(num))  
    
 
 
